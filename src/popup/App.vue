@@ -3,7 +3,8 @@
     <label for="servings">Servings</label>
     <input name="servings" v-model="servings" />
     <div>
-      <div v-for="recipe in recipies" :key="recipe.url" class="recipe">
+      <div v-for="(recipe, index) in recipies" :key="recipe.url" class="recipe">
+        <button @click="deleteIndex(index)">Delete</button>
         <div class="recipe-name">{{recipe.name}}</div>
         <a :href="recipe.url" class="recipe-url">{{recipe.url}}</a>
       </div>
@@ -46,7 +47,6 @@ export default {
         if (response.error) {
           this.error = response.error
         } else {
-          console.log(this.recipies)
           this.recipies.push(response.recipe)
           this.ingredients = response.recipe.ingredients
         }
@@ -54,6 +54,9 @@ export default {
     },
     handleGroceryList() {
       chrome.tabs.create({ url: chrome.runtime.getURL("grocery-list.html") })
+    },
+    deleteIndex(index) {
+      this.$delete(this.recipies, index)
     }
   },
   mounted() {
