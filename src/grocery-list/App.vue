@@ -8,6 +8,8 @@
 </template>
 
 <script>
+const RECIPES_KEY = 'recipes'
+
 export default {
   data () {
     return {
@@ -15,7 +17,10 @@ export default {
     }
   },
   mounted() {
-    this.recipies = JSON.parse(window.localStorage.getItem(RECIPES_KEY)) || []
+    chrome.storage.sync.get([RECIPES_KEY], data => {
+      console.log(data)
+      this.recipes = data.recipes || []
+    })
   }
 }
 </script>
