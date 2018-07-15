@@ -18,7 +18,6 @@
 
 <script>
 /* global chrome */
-
 const RECIPES_KEY = 'recipes'
 
 function sendMessage(message) {

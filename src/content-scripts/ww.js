@@ -2,10 +2,9 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.type === "get_recipe") {
     const recipeEl = getRecipe();
-    console.log("hi");
     if (recipeEl) {
-      console.log("bye");
       const recipePage = new RecipePage(document);
+      console.log(recipePage.parse());
       sendResponse({
         recipe: recipePage.parse()
       });
@@ -19,6 +18,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 function getRecipe() {
   return document.querySelector(".recipe-section");
+}
+
+function parseFraction(fraction) {
+  const parts = fraction.split("⁄");
+  return parts.length > 1 ? parseFloat(parts[0]) / parseFloat(parts[1]) : parseFloat(fraction);
+}
+
+function parseNumber(string) {
+  return string.split(" ").reduce((total, value) => total + parseFraction(value), 0);
 }
 
 class RecipePage {
@@ -48,7 +56,7 @@ class RecipePage {
     return {
       name: this.name(),
       url: this.url(),
-      servings: this.servings(),
+      servings: parseNumber(this.servings()),
       ingredients: this.ingredients()
     };
   }
@@ -73,7 +81,7 @@ class IngredientParser {
 
   parse() {
     return {
-      amount: this.amount(),
+      amount: parseNumber(this.amount()),
       portionSize: this.portionSize(),
       name: this.name()
     };
