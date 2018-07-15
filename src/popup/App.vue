@@ -46,21 +46,24 @@ export default {
         if (response.error) {
           this.error = response.error
         } else {
+          console.log(this.recipies)
           this.recipies.push(response.recipe)
           this.ingredients = response.recipe.ingredients
         }
       });
     },
     handleGroceryList() {
-      chrome.tabs.create({ url: chrome.runtime.getURL("grocery-list.html") });
+      chrome.tabs.create({ url: chrome.runtime.getURL("grocery-list.html") })
     }
   },
   mounted() {
-    this.recipies = JSON.parse(window.localStorage.getItem(RECIPES_KEY)) || []
+    chrome.storage.sync.get([RECIPES_KEY], data => {
+      this.recipies = data.recipes || []
+    })
   },
   watch: {
     recipies(recipes) {
-      window.localStorage.setItem(RECIPES_KEY, JSON.stringify(recipes))
+      chrome.storage.sync.set({ [RECIPES_KEY]: recipes });
     }
   }
 }
