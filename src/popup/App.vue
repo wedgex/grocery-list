@@ -14,6 +14,9 @@
 
 <script>
 /* global chrome */
+
+const RECIPES_KEY = 'recipes'
+
 function sendMessage(message) {
   return new Promise(function(resolve) {
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -28,16 +31,7 @@ export default {
   name: 'app',
   data () {
     return {
-      recipies: [
-        {
-          name: 'Slow Cooker Shredded Chicken Nachos',
-          url: 'https://cmx.weightwatchers.com/nui/explore/details2/WWRECIPE:5a65fc5176e638041f4f417b'
-        },
-        {
-          name: 'Rustic Italian Flatbread Pizza',
-          url: 'https://cmx.weightwatchers.com/nui/explore/details2/WWRECIPE:593f0d182787d61970aea102'
-        }
-      ],
+      recipies: [],
       error: null,
       ingredients: null
     }
@@ -52,6 +46,14 @@ export default {
           this.ingredients = response.recipe.ingredients
         }
       });
+    }
+  },
+  mounted() {
+    this.recipies = JSON.parse(window.localStorage.getItem(RECIPES_KEY)) || []
+  },
+  watch: {
+    recipies(recipes) {
+      window.localStorage.setItem(RECIPES_KEY, JSON.stringify(recipes))
     }
   }
 }
