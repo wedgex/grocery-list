@@ -8,7 +8,7 @@
     </div>
     <button @click="handleAdd">Add Current Page</button>
     <div v-if="error" class="error">{{error.message}}</div>
-    <div v-if="recipe">{{recipe}}</div>
+    <div v-if="ingredients">{{ingredients}}</div>
   </div>
 </template>
 
@@ -39,7 +39,7 @@ export default {
         }
       ],
       error: null,
-      recipe: null
+      ingredients: null
     }
   },
   methods: {
@@ -48,7 +48,8 @@ export default {
         if (response.error) {
           this.error = response.error
         } else {
-          this.recipe = response.recipe
+          this.recipies.push(response.recipe)
+          this.ingredients = response.recipe.ingredients
         }
       });
     }
