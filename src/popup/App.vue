@@ -1,7 +1,13 @@
 <template>
   <div id="app">
-    <button @click="handleSend">Send</button>
-    <div v-if="error">{{error.message}}</div>
+    <div>
+      <div v-for="recipe in recipies" :key="recipe.url" class="recipe">
+        <div class="recipe-name">{{recipe.name}}</div>
+        <a :href="recipe.url" class="recipe-url">{{recipe.url}}</a>
+      </div>
+    </div>
+    <button @click="handleAdd">Add Current Page</button>
+    <div v-if="error" class="error">{{error.message}}</div>
   </div>
 </template>
 
@@ -21,11 +27,21 @@ export default {
   name: 'app',
   data () {
     return {
+      recipies: [
+        {
+          name: 'Slow Cooker Shredded Chicken Nachos',
+          url: 'https://cmx.weightwatchers.com/nui/explore/details2/WWRECIPE:5a65fc5176e638041f4f417b'
+        },
+        {
+          name: 'Rustic Italian Flatbread Pizza',
+          url: 'https://cmx.weightwatchers.com/nui/explore/details2/WWRECIPE:593f0d182787d61970aea102'
+        }
+      ],
       error: null
     }
   },
   methods: {
-    handleSend() {
+    handleAdd() {
       sendMessage({ type: "get_recipe" }).then(response => {
         this.error = response.error
       });
@@ -35,12 +51,9 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+.recipe {}
+
+.recipe-url {}
+
+.error {}
 </style>
