@@ -8,6 +8,7 @@
     </div>
     <button @click="handleAdd">Add Current Page</button>
     <div v-if="error" class="error">{{error.message}}</div>
+    <div v-if="recipe">{{recipe}}</div>
   </div>
 </template>
 
@@ -37,13 +38,18 @@ export default {
           url: 'https://cmx.weightwatchers.com/nui/explore/details2/WWRECIPE:593f0d182787d61970aea102'
         }
       ],
-      error: null
+      error: null,
+      recipe: null
     }
   },
   methods: {
     handleAdd() {
       sendMessage({ type: "get_recipe" }).then(response => {
-        this.error = response.error
+        if (response.error) {
+          this.error = response.error
+        } else {
+          this.recipe = response.recipe
+        }
       });
     }
   }
