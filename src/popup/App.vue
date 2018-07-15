@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <label for="servings">Servings</label>
+    <input name="servings" v-model="servings" />
     <div>
       <div v-for="recipe in recipies" :key="recipe.url" class="recipe">
         <div class="recipe-name">{{recipe.name}}</div>
@@ -9,6 +11,7 @@
     <button @click="handleAdd">Add Current Page</button>
     <div v-if="error" class="error">{{error.message}}</div>
     <div v-if="ingredients">{{ingredients}}</div>
+    <button @click="handleGroceryList">Grocery List</button>
   </div>
 </template>
 
@@ -31,6 +34,7 @@ export default {
   name: 'app',
   data () {
     return {
+      servings: 2,
       recipies: [],
       error: null,
       ingredients: null
@@ -46,6 +50,9 @@ export default {
           this.ingredients = response.recipe.ingredients
         }
       });
+    },
+    handleGroceryList() {
+      chrome.tabs.create({ url: chrome.runtime.getURL("grocery-list.html") });
     }
   },
   mounted() {
