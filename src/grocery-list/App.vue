@@ -1,6 +1,10 @@
 <template>
   <div>
     <h1>Grocery List</h1>
+    <div class="recipes">
+      {{servings}} servings.
+      <span v-for="recipe in recipes" :key="recipe.url" class="recipe">{{recipe.name}}</span>
+    </div>
     <table>
       <tr v-for="[name, ingredients] in list" :key="name">
         <td>
@@ -46,11 +50,22 @@ export default {
 
 <style scoped>
 .portion::after {
-  content: "+";
-  margin-right: "2px";
+  content: "+ ";
 }
 
 .portion:last-child::after {
+  content: "";
+}
+
+.recipes {
+  font-style: italic;
+}
+
+.recipe::after {
+  content: ", ";
+}
+
+.recipe:last-child:after {
   content: "";
 }
 </style>
