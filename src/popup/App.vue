@@ -6,14 +6,12 @@
     </div>
     <ul class="collection recipies">
       <li v-for="(recipe, index) in recipes" :key="recipe.url" class="collection-item recipe">
-        <div>
-          <a :href="recipe.url" class="recipe-name" target="_blank">
-            {{recipe.name}}
-          </a>
-          <button @click="deleteIndex(index)" class="secondary-content btn btn-small waves-effect waves-light red recipie-delete">
-            <i class="material-icons">delete</i>
-          </button>
-        </div>
+        <a :href="recipe.url" class="recipe-name" target="_blank">
+          {{recipe.name}}
+        </a>
+        <button @click="deleteIndex(index)" class="btn btn-small waves-effect waves-light red recipie-delete">
+          <i class="material-icons">delete</i>
+        </button>
       </li>
     </ul>
     <div v-if="error" class="red-text error">{{error.message}}</div>
@@ -77,5 +75,10 @@ export default {
 .popup {
   min-width: 500px;
   padding: 5px;
+}
+
+.recipe {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
