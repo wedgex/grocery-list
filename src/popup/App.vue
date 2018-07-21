@@ -18,6 +18,7 @@
 
 <script>
 /* global chrome */
+import * as Recipes from '@/recipes'
 const RECIPES_KEY = 'recipes'
 
 function sendMessage(message) {
@@ -46,8 +47,9 @@ export default {
         if (response.error) {
           this.error = response.error
         } else {
-          this.recipes.push(response.recipe)
-          this.ingredients = response.recipe.ingredients
+          const recipe = Recipes.normalizeServings(response.recipe, this.servings)
+          this.recipes.push(recipe)
+          this.ingredients = recipe.ingredients
         }
       });
     },
@@ -72,9 +74,12 @@ export default {
 </script>
 
 <style>
-.recipe {}
+.recipe {
+}
 
-.recipe-url {}
+.recipe-url {
+}
 
-.error {}
+.error {
+}
 </style>
