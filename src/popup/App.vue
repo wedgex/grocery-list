@@ -30,7 +30,7 @@
 /* global chrome */
 import 'materialize-css/dist/css/materialize.min.css'
 import * as Recipes from '@/recipes'
-const RECIPES_KEY = 'recipes'
+import * as store from '@/store'
 
 function sendMessage(message) {
   return new Promise(function(resolve) {
@@ -71,13 +71,11 @@ export default {
     }
   },
   mounted() {
-    chrome.storage.sync.get([RECIPES_KEY], data => {
-      this.recipes = data.recipes || []
-    })
+    store.getRecipes().then(recipes => (this.recipes = recipes))
   },
   watch: {
     recipes(recipes) {
-      chrome.storage.sync.set({ [RECIPES_KEY]: recipes });
+      store.setRecipes(recipes)
     }
   }
 }

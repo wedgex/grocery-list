@@ -19,8 +19,7 @@
 
 <script>
 import * as GroceryList from './list'
-
-const RECIPES_KEY = 'recipes'
+import * as store from '@/store'
 
 export default {
   data () {
@@ -34,9 +33,7 @@ export default {
     }
   },
   mounted() {
-    chrome.storage.sync.get([RECIPES_KEY], data => {
-      this.recipes = data.recipes || []
-    })
+    store.getRecipes().then(recipies => (this.recipes = recipies))
   }
 }
 </script>
