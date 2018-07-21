@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Food Stuff",
-  "description": "TODO",
+  "name": "Grocery List",
+  "description": "Add recipies from various sites and create a grocery list.",
   "version": "0.1",
   "browser_action": {
     "default_icon": "icon.png",
