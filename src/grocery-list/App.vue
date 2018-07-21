@@ -19,21 +19,27 @@
 
 <script>
 import * as GroceryList from './list'
+import * as Recipes from '@/recipes'
 import * as store from '@/store'
 
 export default {
   data () {
     return {
-      recipes: []
+      recipes: [],
+      servings: 1
     }
   },
   computed: {
     list() {
-      return GroceryList.build(this.recipes)
+      return GroceryList.build(this.normalizedRecipes)
+    },
+    normalizedRecipes() {
+      return this.recipes.map(recipe => Recipes.normalizeServings(recipe, this.servings))
     }
   },
   mounted() {
     store.getRecipes().then(recipies => (this.recipes = recipies))
+    store.getServings().then(servings => (this.servings = servings))
   }
 }
 </script>

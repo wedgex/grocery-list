@@ -29,7 +29,6 @@
 <script>
 /* global chrome */
 import 'materialize-css/dist/css/materialize.min.css'
-import * as Recipes from '@/recipes'
 import * as store from '@/store'
 
 function sendMessage(message) {
@@ -57,9 +56,7 @@ export default {
         if (response.error) {
           this.error = response.error
         } else {
-          const recipe = Recipes.normalizeServings(response.recipe, this.servings)
-          this.recipes.push(recipe)
-          this.ingredients = recipe.ingredients
+          this.recipes.push(response.recipe)
         }
       });
     },
@@ -76,6 +73,9 @@ export default {
   watch: {
     recipes(recipes) {
       store.setRecipes(recipes)
+    },
+    servings(servings) {
+      store.setServings(servings)
     }
   }
 }
