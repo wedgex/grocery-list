@@ -29,17 +29,8 @@
 <script>
 /* global chrome */
 import 'materialize-css/dist/css/materialize.min.css'
+import * as ActiveTab from '@/active-tab'
 import * as store from '@/store'
-
-function sendMessage(message) {
-  return new Promise(function(resolve) {
-    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      chrome.tabs.sendMessage(tabs[0].id, message, response => {
-        resolve(response);
-      });
-    });
-  });
-}
 
 export default {
   name: 'app',
@@ -52,7 +43,7 @@ export default {
   },
   methods: {
     handleAdd() {
-      sendMessage({ type: "get_recipe" }).then(response => {
+      ActiveTab.sendMessage({ type: "get_recipe" }).then(response => {
         if (response.error) {
           this.error = response.error
         } else {

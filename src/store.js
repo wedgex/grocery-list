@@ -7,7 +7,6 @@ export function setRecipes(recipes) {
 }
 
 export function getRecipes() {
-  console.log("getem");
   return new Promise(resolve =>
     chrome.storage.sync.get([RECIPES_KEY], data => resolve(data.recipes || []))
   );
