@@ -60,6 +60,7 @@ export default {
   },
   mounted() {
     store.getRecipes().then(recipes => (this.recipes = recipes))
+    store.getServings().then(servings => (this.servings = servings))
   },
   watch: {
     recipes(recipes) {
