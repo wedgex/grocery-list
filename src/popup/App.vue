@@ -21,7 +21,7 @@
     <button @click="handleAdd" class="btn-floating btn-small waves-effect waves-light">
       <i class="material-icons">add</i>
     </button>
-    <button @click="handleGroceryList" class="btn right btn-small waves-effect waves-light build-grocery-list" :disabled="!recipes.length">
+    <button @click="handleGroceryList" class="btn-flat right btn-small teal-text waves-effect waves-light build-grocery-list" :disabled="!recipes.length">
       Grocery List
     </button>
   </div>
@@ -43,13 +43,19 @@ export default {
   },
   methods: {
     handleAdd() {
+      console.log('sending get_recipe message')
       ActiveTab.sendMessage({ type: "get_recipe" }).then(response => {
+        console.log('response recieved', response)
         if (response) {
           if (response.error) {
+            console.log('error', response.error)
             this.error = response.error
           } else {
+            console.log('pushing recipe', { ...response.recipe, originalServings: response.recipe.servings })
             this.recipes.push({ ...response.recipe, originalServings: response.recipe.servings }) // TODO handle this better
           }
+        } else {
+          this.error = chrome.runtime.lastError
         }
       });
     },
