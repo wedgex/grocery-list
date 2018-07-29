@@ -2,8 +2,7 @@
   <div>
     <h1>Grocery List</h1>
     <div class="recipes">
-      {{servings}} servings.
-      <span v-for="recipe in recipes" :key="recipe.url" class="recipe">{{recipe.name}}</span>
+      <span v-for="recipe in recipes" :key="recipe.url" class="recipe">{{recipe.name}} ({{recipe.servings}} servings)</span>
     </div>
     <table>
       <tr v-for="[name, ingredients] in list" :key="name">
@@ -30,7 +29,6 @@ export default {
   data () {
     return {
       recipes: [],
-      servings: 1
     }
   },
   computed: {
@@ -38,12 +36,11 @@ export default {
       return GroceryList.build(this.normalizedRecipes)
     },
     normalizedRecipes() {
-      return this.recipes.map(recipe => Recipes.normalizeServings(recipe, this.servings))
+      return this.recipes.map(recipe => Recipes.normalizeServings(recipe))
     }
   },
   mounted() {
     store.getRecipes().then(recipies => (this.recipes = recipies))
-    store.getServings().then(servings => (this.servings = servings))
   }
 }
 </script>

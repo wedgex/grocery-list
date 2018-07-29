@@ -1,11 +1,10 @@
 <template>
   <div class="popup">
-    <div class="servings">
-      <label for="servings" class="servings-label">Servings</label>
-      <input type="number" name="servings" class="validate servings-input" v-model="servings" />
-    </div>
     <ul v-if="recipes.length" class="collection recipies">
       <li v-for="(recipe, index) in recipes" :key="recipe.url" class="collection-item recipe">
+        <div class="servings">
+          <input v-model="recipe.servings" name="servings" type="number" />
+        </div>
         <a :href="recipe.url" class="recipe-name" target="_blank">
           {{recipe.name}}
         </a>
@@ -38,7 +37,6 @@ export default {
   name: 'app',
   data () {
     return {
-      servings: 2,
       recipes: [],
       error: null,
     }
@@ -50,7 +48,7 @@ export default {
           if (response.error) {
             this.error = response.error
           } else {
-            this.recipes.push(response.recipe)
+            this.recipes.push({ ...response.recipe, originalServings: response.recipe.servings }) // TODO handle this better
           }
         }
       });
@@ -64,15 +62,14 @@ export default {
   },
   mounted() {
     store.getRecipes().then(recipes => (this.recipes = recipes))
-    store.getServings().then(servings => (this.servings = servings))
   },
   watch: {
-    recipes(recipes) {
-      store.setRecipes(recipes)
+   recipes: {
+        handler: function (recipes) {
+        store.setRecipes(recipes)
+      },
+      deep: true
     },
-    servings(servings) {
-      store.setServings(servings)
-    }
   }
 }
 </script>
@@ -86,10 +83,15 @@ export default {
 .recipe {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .empty-list {
   text-align: center;
   margin: 10px;
+}
+
+.servings {
+  width: 50px;
 }
 </style>

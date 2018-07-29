@@ -1,8 +1,7 @@
-export function normalizeServings(recipe, servings) {
-  const ratio = servings / recipe.servings;
+export function normalizeServings(recipe) {
+  const ratio = recipe.servings / recipe.originalServings;
   return {
     ...recipe,
-    servings,
     ingredients: recipe.ingredients.map(ingredient => ({
       ...ingredient,
       amount: ratio * ingredient.amount
