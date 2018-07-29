@@ -46,10 +46,12 @@ export default {
   methods: {
     handleAdd() {
       ActiveTab.sendMessage({ type: "get_recipe" }).then(response => {
-        if (response.error) {
-          this.error = response.error
-        } else {
-          this.recipes.push(response.recipe)
+        if (response) {
+          if (response.error) {
+            this.error = response.error
+          } else {
+            this.recipes.push(response.recipe)
+          }
         }
       });
     },

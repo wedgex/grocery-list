@@ -4,7 +4,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     const recipeEl = getRecipe();
     if (recipeEl) {
       const recipePage = new RecipePage(document);
-      console.log(recipePage.parse());
       sendResponse({
         recipe: recipePage.parse()
       });
