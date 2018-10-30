@@ -30,6 +30,10 @@ jobs:
 
       - run: yarn install
 
+      - run: yarn build
+
+      - run: yarn package
+
       - save_cache:
           paths:
             - node_modules

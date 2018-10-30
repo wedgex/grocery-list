@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "package": "yarn build && cd dist && zip -r ../grocery-list.zip *"
+    "package": "yarn build && cd dist && zip -r grocery-list.zip *"
   },
   "dependencies": {
     "lodash-es": "^4.17.10",
