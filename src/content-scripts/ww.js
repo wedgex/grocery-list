@@ -40,7 +40,7 @@ class RecipePage {
   }
 
   name() {
-    return this.el.querySelector(".item-title").textContent;
+    return this.el.querySelector(".id-name").textContent;
   }
 
   url() {
@@ -52,7 +52,7 @@ class RecipePage {
   }
 
   ingredients() {
-    return [...this.el.querySelectorAll(".recipe-ingredients ul li")]
+    return [...this.el.querySelectorAll(".recipe-ingredients .ri-item")]
       .map(el => new IngredientParser(el))
       .map(ingredient => ingredient.parse());
   }
@@ -73,15 +73,15 @@ class IngredientParser {
   }
 
   amount() {
-    return this.el.querySelector(".si-portion-amount").textContent;
+    return this.el.querySelector(".ri-portion-amount").textContent;
   }
 
   portionSize() {
-    return this.el.querySelector(".si-portion-name").textContent;
+    return this.el.querySelector(".ri-portion-name").textContent;
   }
 
   name() {
-    return this.el.querySelector(".si-ingredient-name").textContent;
+    return this.el.querySelector(".ri-name").textContent;
   }
 
   parse() {
